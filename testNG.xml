@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1_FUNCTIONAL TESTING" verbose="1" >
+    <test name="DO AN THUC TAP" >
+        <classes>
+            <class name="EShopper.AU01" />
+            <class name="EShopper.AU02" />
+            <class name="EShopper.AU03" />
+            <class name="EShopper.AU04" />
+            <class name="EShopper.AU05" />
+        </classes>
+    </test>
+</suite>
