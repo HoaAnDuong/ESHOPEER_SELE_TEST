@@ -6,5 +6,10 @@
   "AU02": {
     "expectedProductNames": ["Samsung 43 inch UA43T6500","Toshiba Inverter 13 kg AW-DUJ1400GV KK", "Toshiba 9 Kg AW-H1000GV SB"],
     "expectedProductPrices": ["8.000.000 VNĐ", "12.790.000 VNĐ", "6.490.000 VNĐ"]
+  },
+  "AU06" : {
+    "expectedProductNames": ["Toshiba Inverter 13 kg AW-DUJ1400GV KK", "Panasonic Inverter 306 lít NR-BL340PKVN", "Panasonic 9kg NA-F90V5LMX", "Panasonic Inverter 255 lít NR-BV280QSVN"],
+    "expectedProductPrices": ["12.790.000 VNĐ", "11.490.000 VNĐ", "7.890.000 VNĐ", "11.490.000 VNĐ"],
+    "removingItems" : [1,3]
   }
 }
