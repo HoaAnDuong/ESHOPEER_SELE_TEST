@@ -10,16 +10,13 @@ public class TestBase extends TestPreCondition{
 
     @BeforeClass
     public void before() {
-        System.out.println("Pre-condition");
         System.setProperty("webdriver.chrome.driver", Utilities.getProjectPath() + "\\src\\main\\java\\Executables\\chromedriver.exe");
         Constant.WEBDRIVER = new ChromeDriver();
     }
 
     @AfterClass
     public void after() {
-        System.out.println("Post-condition");
-
+        System.out.println("Quit Chrome");
         Constant.WEBDRIVER.quit();
-
     }
 }

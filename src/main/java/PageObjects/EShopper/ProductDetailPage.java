@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class ProductDetailPage extends SearchResultPage{
 
     //Locator
@@ -46,7 +48,7 @@ public class ProductDetailPage extends SearchResultPage{
         StringBuilder sb = new StringBuilder(s);
         return sb.insert(productPrice.length() - 4, " ").toString();
     }
-    public void addManyProductToCart(String[] productName, int numberOfItem) throws InterruptedException {
+    public void addManyProductToCart(String[] productName, int numberOfItem) {
         PageFactory.initElements(Constant.WEBDRIVER, this);
         for (int i = 0; i < numberOfItem; i++){
             this.getTxtSearchBox().sendKeys(productName[i]);
@@ -54,7 +56,7 @@ public class ProductDetailPage extends SearchResultPage{
             Utilities.scrollIntoView(this.getLblProductName(productName[i]));
             this.clickSearchedProduct(productName[i]);
             this.getBtnAddToCart(productName[i]).click();
-            Thread.sleep(500);
+            Constant.WEBDRIVER.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
             this.getBtnContinueWatch().click();
         }
     }

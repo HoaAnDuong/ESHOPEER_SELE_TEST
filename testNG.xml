@@ -2,12 +2,15 @@
 
 <suite name="Suite1_FUNCTIONAL TESTING" verbose="1" >
     <test name="DO AN THUC TAP" >
+
+        <groups>
+            <run>
+                <include name="Cart"/>
+            </run>
+        </groups>
+
         <classes>
-            <class name="EShopper.AU01" />
-            <class name="EShopper.AU02" />
-            <class name="EShopper.AU03" />
-            <class name="EShopper.AU04" />
-            <class name="EShopper.AU05" />
+           <class name="EShopper."></class>
         </classes>
     </test>
 </suite>
