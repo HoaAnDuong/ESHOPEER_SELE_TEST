@@ -21,7 +21,7 @@ public class JsonHelper {
 
     public static JsonObject getJsonObject(String jsonFilePath) {
         try {
-            JsonObject object = new JsonObject();
+            JsonObject object;
             Gson gson = new Gson();
             JsonReader reader = getJsonReader(jsonFilePath);
             object = gson.fromJson(reader, JsonObject.class);

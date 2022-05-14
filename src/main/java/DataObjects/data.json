@@ -11,5 +11,22 @@
     "expectedProductNames": ["Toshiba Inverter 13 kg AW-DUJ1400GV KK", "Panasonic Inverter 306 lít NR-BL340PKVN", "Panasonic 9kg NA-F90V5LMX", "Panasonic Inverter 255 lít NR-BV280QSVN"],
     "expectedProductPrices": ["12.790.000 VNĐ", "11.490.000 VNĐ", "7.890.000 VNĐ", "11.490.000 VNĐ"],
     "removingItems" : [1,3]
-  }
+  },
+  "AU07" : [
+    {
+      "productName" : "Panasonic 9kg NA-F90V5LMX",
+      "productQuantity" : 5,
+      "productPrice" : 7890000
+    },
+    {
+      "productName" : "Panasonic Inverter 234 lít NR-BL263PKVN",
+      "productQuantity" : 3,
+      "productPrice" : 8590000
+    },
+    {
+      "productName" : "Samsung Inverter 21 kg WD21T6500GV",
+      "productQuantity": 4,
+      "productPrice": 33290000
+    }
+  ]
 }
