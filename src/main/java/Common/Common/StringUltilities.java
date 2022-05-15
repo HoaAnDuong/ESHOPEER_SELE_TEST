@@ -21,7 +21,7 @@ public class StringUltilities {
         return randomNum;
     }
 
-    public static String priceFormatter(long price){
+    public static String priceFormatter(long price, String currencyFormat){
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
 
@@ -30,6 +30,6 @@ public class StringUltilities {
         formatter.setDecimalFormatSymbols(symbols);
         BigDecimal bd = new BigDecimal(price);
 
-        return formatter.format(bd.longValue()) + " VND";
+        return formatter.format(bd.longValue()) + currencyFormat;
     }
 }

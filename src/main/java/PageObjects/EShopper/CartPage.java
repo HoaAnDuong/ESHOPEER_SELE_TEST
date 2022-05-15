@@ -1,5 +1,6 @@
 package PageObjects.EShopper;
 
+import Common.Common.StringUltilities;
 import Common.Constant.Constant;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
@@ -15,6 +16,9 @@ public class CartPage extends GeneralPage{
     //Locator
     private final By tbiProductNames = By.xpath("//div[@class='table-responsive cart_info']//table[@class='table table-condensed']/tbody//td[@class='cart_description']/p");
     private final By tbiProductPrices = By.xpath("//table[@class='table table-condensed']/tbody//td[@class='cart_price']/p");
+    private final By tbiTotalProductPrice = By.xpath("//table[@class='table table-condensed']/tbody//td[@class='cart_total']/p");
+
+    private final By lblTotalPrice = By.xpath("//table[@class='table table-condensed']/tbody/tr/td/li[text()='Tổng tiền :']/span");
 
     String btnRemoveProduct = "//div[@class='table-responsive cart_info']/form/table//td/p[text()='%s']/../following-sibling::td/a[@class='cart_quantity_delete']";
     String lblProductName = "//div[@class='table-responsive cart_info']//table[@class='table table-condensed']/tbody//td[@class='cart_description']/p[text()='%s']";
@@ -23,9 +27,11 @@ public class CartPage extends GeneralPage{
 
     public String[] actualProductNames = {};
     public String[] actualProductPrices = {};
+    public String[] actualTotalProductPrices = {};
 
     List<String> actualProductNameList = new ArrayList<>(Arrays.asList(actualProductNames));
     List<String> actualProductPriceList = new ArrayList<>(Arrays.asList(actualProductPrices));
+    List<String> actualTotalProductPriceList = new ArrayList<>(Arrays.asList(actualProductPrices));
 
     //Elements
     public List<WebElement> getTbiProductNames(){
@@ -34,6 +40,10 @@ public class CartPage extends GeneralPage{
 
     public List<WebElement> getTbiProductPrices(){
         return Constant.WEBDRIVER.findElements(tbiProductPrices);
+    }
+
+    public List<WebElement> getTbiTotalProductPrice(){
+        return Constant.WEBDRIVER.findElements(tbiTotalProductPrice);
     }
 
     public WebElement getBtnRemoveItem(String productName){
@@ -46,6 +56,10 @@ public class CartPage extends GeneralPage{
 
     public List<WebElement> getProductName(String productName){
         return Constant.WEBDRIVER.findElements(By.xpath(String.format(lblProductName, productName)));
+    }
+
+    public WebElement getLblTotalPrice(){
+        return Constant.WEBDRIVER.findElement(lblTotalPrice);
     }
 
     //Methods
@@ -69,10 +83,26 @@ public class CartPage extends GeneralPage{
         return actualProductPrices;
     }
 
+    public String[] getActualTotalProductPrice(){
+        for (WebElement actualTotalProductPrice : getTbiTotalProductPrice()){
+            actualTotalProductPriceList.add(actualTotalProductPrice.getText());
+        }
+
+        actualTotalProductPrices = actualTotalProductPriceList.toArray(new String[actualTotalProductPriceList.size()]);
+        return actualTotalProductPrices;
+    }
+
     public void assertProductInfo(String[] actualProductInfo, String[] expectedProductInfo){
         for(int i = 0; i < actualProductInfo.length; i++){
             System.out.println("[actualString]: " + actualProductInfo[i]+ "| " + "[expectedString]: " + expectedProductInfo[i]);
             Assert.assertEquals(actualProductInfo[i], expectedProductInfo[i]);
+        }
+    }
+
+    public void assertTotalProductPrice(String[] actualProductInfo, Integer[] expectedProductInfo){
+        for(int i = 0; i < actualProductInfo.length; i++){
+            System.out.println("[actualString]: " + actualProductInfo[i]+ "| " + "[expectedString]: " + StringUltilities.priceFormatter(expectedProductInfo[i],"đ"));
+            Assert.assertEquals(actualProductInfo[i], StringUltilities.priceFormatter(expectedProductInfo[i],"đ"));
         }
     }
 

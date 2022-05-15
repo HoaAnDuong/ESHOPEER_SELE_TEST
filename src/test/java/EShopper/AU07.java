@@ -2,30 +2,46 @@ package EShopper;
 
 import Common.Common.StringUltilities;
 import Common.Common.Utilities;
-import Common.Constant.Constant;
+import PageObjects.EShopper.CartPage;
+import PageObjects.EShopper.HomePage;
+import PageObjects.EShopper.ProductDetailPage;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
+
 
 public class AU07 extends TestBase{
 
-    @Test (description = "AU07 - Kiem tong tien trong gio hang co hien thi chinh xac")
-    public void AU07(){
+    @Test (description = "AU07 - Kiem tong tien trong gio hang co hien thi chinh xac", dataProvider = "data-providerAU07")
+    public void AU07(String[] expectedProductNameArray, Integer[] expectedProductQuantityArray, Integer[]expectedTotalProductPricesArray, long totalPrice){
+
+        HomePage homePage = new HomePage();
+        ProductDetailPage productDetailPage = new ProductDetailPage();
+        CartPage cartPage = new CartPage();
+
+        System.out.println("BUOC 1: Dieu huong den trang ESHOPPER");
+        homePage.open();
+
+        System.out.println("BUOC 2: Them nhieu hon 2 san pham vao gio hang");
+        productDetailPage.addProductsToCart(expectedProductNameArray, expectedProductQuantityArray);
+
+        System.out.println("BUOC 3: Di den trang gio hang");
+        homePage.clickCartButton();
+        Utilities.scrollIntoView(cartPage.getLblTotalPrice());
+
+        cartPage.assertTotalProductPrice(cartPage.getActualTotalProductPrice(), expectedTotalProductPricesArray);
+        Assert.assertEquals(cartPage.getLblTotalPrice().getText(), StringUltilities.priceFormatter(totalPrice, " VNĐ"));
 
     }
 
-    public static void getJson(){
+    @DataProvider(name = "data-providerAU07")
+    public Object[][] dataProvider(){
         ArrayList<String> expectedProductNameList = new ArrayList<>();
         ArrayList<Integer> expectedProductQuantityList = new ArrayList<>();
-        ArrayList<Integer> expectedProductPricesList = new ArrayList<>();
         ArrayList<Integer> expectedTotalProductPriceList = new ArrayList<>();
 
         long totalPrice = 0;
@@ -37,30 +53,23 @@ public class AU07 extends TestBase{
         for (int i = 0; i < dataAU07.size(); i++){
             JsonObject productItem = dataAU07.get(i).getAsJsonObject();
             expectedProductNameList.add(productItem.get("productName").getAsString());
-            expectedProductPricesList.add(productItem.get("productPrice").getAsInt());
             expectedProductQuantityList.add(productItem.get("productQuantity").getAsInt());
             expectedTotalProductPriceList.add(productItem.get("productQuantity").getAsInt() * productItem.get("productPrice").getAsInt());
         }
 
         String[] expectedProductNameArray = expectedProductNameList.toArray(new String[expectedProductNameList.size()]);
         Integer[] expectedProductQuantityArray = expectedProductQuantityList.toArray(new Integer[expectedProductQuantityList.size()]);
-        Integer[] expectedProductPriceArray = expectedProductPricesList.toArray(new Integer[expectedProductPricesList.size()]);
         Integer[] expectedTotalProductPricesArray = expectedTotalProductPriceList.toArray(new Integer[expectedTotalProductPriceList.size()]);
 
-
-        for (int i = 0; i < expectedProductNameArray.length; i++){
-            System.out.println(expectedProductNameArray[i]);
-            System.out.println(expectedProductQuantityArray[i]);
-            System.out.println(expectedProductPriceArray[i]);
-            System.out.println(StringUltilities.priceFormatter(expectedTotalProductPricesArray[i]));
-
-            totalPrice += expectedProductPriceArray[i] * expectedProductQuantityArray[i];
+        for (Integer expectedTotalProductPrice : expectedTotalProductPricesArray){
+            totalPrice += expectedTotalProductPrice;
         }
 
-        System.out.println(StringUltilities.priceFormatter(totalPrice));
+        Object[][] objects = new Object[][]{
+                {expectedProductNameArray, expectedProductQuantityArray, expectedTotalProductPricesArray, totalPrice}
+        };
+
+        return objects;
     }
 
-    public static void main(String[] args) {
-        AU07.getJson();
-    }
 }
